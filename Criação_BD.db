@@ -1,0 +1,30 @@
+create database investimentos;
+use investimentos;
+
+create table Usuarios(
+cpf_cnpj char(14) not null,
+nome varchar(70) not null,
+dataNasc date not null,
+telefone char(16) not null,
+senha varchar(45) not null,
+primary key(cpf_cnpj)
+);
+
+create table Movimentacoes(
+cod int auto_increment,
+nome_atk char(14) not null,
+nome_moeda char(14) not null,
+capital float not null,
+meses int not null,
+montante float not null,
+primary key (cod)
+);
+
+select * from Usuarios;
+select * from Movimentacoes_p;
+
+drop table Usuarios;
+drop table Movimentacoes_p;
+
+show tables;
+
