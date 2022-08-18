@@ -19,9 +19,10 @@ from tkinter import *
 import tkinter as tk
 from turtle import title, width
 
+
 #CONSTRUÇÃO EWERSON
 cotar = Cotacao()
-cadastrar = Cadastro()
+cadastrar = Cadastro(None, None, None, None, None)
 #CONSTRUÇÃO EWERSON
 
 root = Tk()
@@ -41,7 +42,7 @@ fr5 = Frame()
 
 #CONSTRUÇÃO EWERSON
 def logando():
-    mysqldb = mysql.connector.connect(host='localhost',user='root',password='q1w2e3',database='investimentos')
+    mysqldb = mysql.connector.connect(host='localhost',user='root',password='92337155Thule03@1',database='investimentos')
     mycursor = mysqldb.cursor()
     global user, x
     user = fr0_in2.get()
@@ -492,33 +493,41 @@ def escolha_vender():
     if nome_moeda_n == 'DOLAR' or nome_moeda_n == 'DÓLAR':
         print('1')
         cotar.dolar()
-        montante_n = cotar.d + capital_n
-        cadastrar.cadastro_movimentacao(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
+        montante_n = float(cotar.d) + float(capital_n)
+        cadastrar.cadastro_movimentacoes_n(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
         fr5_lab7['text']=montante_n
     if nome_moeda_n == 'EURO':
         print('2')
         cotar.euro()
         montante_n = cotar.e + capital_n
-        cadastrar.cadastro_movimentacao(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
+        cadastrar.cadastro_movimentacoes_n(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
         fr5_lab7['text']=montante_n
     if nome_moeda_n == 'LIBRA':
         print('3')
         cotar.libra()
         montante_n = cotar.l + capital_n
-        cadastrar.cadastro_movimentacao(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
+        cadastrar.cadastro_movimentacoes_n(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
         fr5_lab7['text']=montante_n
     if nome_moeda_n == 'BITCOIN':
         print('4')
         cotar.bitcoin()
         montante_n = cotar.b + capital_n
-        cadastrar.cadastro_movimentacao(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
+        cadastrar.cadastro_movimentacoes_n(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
         fr5_lab7['text']=montante_n
     if nome_moeda_n == 'ETHEREUM':
         print('5')
         cotar.ethereum()
         montante_n = cotar.t + capital_n
-        cadastrar.cadastro_movimentacao(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
+        cadastrar.cadastro_movimentacoes_n(cod_n, nome_atk_n, nome_moeda_n, capital_n, montante_n)
         fr5_lab7['text']=montante_n
+
+def mostrar_saldo():
+    cadastrar.saldo_conta(user)
+    fr2_lab18['text']=round(cadastrar.dolar,3)
+    fr2_lab19['text']=round(cadastrar.euro,3)
+    fr2_lab20['text']=round(cadastrar.libra,3)
+    fr2_lab21['text']=round(cadastrar.bitcoin,3)
+    fr2_lab22['text']=round(cadastrar.ethereum,3)
 
 #def escolha_euro2():
 #    meses = fr3_in4.get()
@@ -663,7 +672,7 @@ fr0_in3.place(width=392, height=45, x=37, y=302)
 
 #CONSTRUÇÃO EWERSON
 # Botão do entrar
-fr0_bt0 = Button(fr0, bd=0, image=fr0_img_2,command=lambda: [logando(), chama_cotacao(), chama_media(),clear_4()])
+fr0_bt0 = Button(fr0, bd=0, image=fr0_img_2,command=lambda: [logando(), chama_cotacao(), chama_media(),clear_4(), mostrar_saldo()])
 fr0_bt0.place(width=118, height=64, x=290, y=408)
 
 # Botão do cadastro
@@ -793,11 +802,11 @@ fr2_lab22.place(width=145, height=24, x=991, y=472) #Ethereum
 # Criação de botões
 
 # Botão de guardar
-fr2_bt1 = Button(fr2, bd=0, image=fr2_img_2, command= lambda:[fr2.grid_remove(),fr5.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=675, y=32)
+fr2_bt1 = Button(fr2, bd=0, image=fr2_img_2, command= lambda:[fr2.grid_remove(),fr5.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=525, y=32)
 # Botão de comprar
 #fr2_bt2 = Button(fr2, bd=0, image=fr2_img_3, command= lambda:[fr2.grid_remove(),fr3.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=54, y=32)
 # Botão de vender
-fr2_bt3 = Button(fr2, bd=0, image=fr2_img_4, command= lambda:[fr2.grid_remove(),fr4.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=367, y=32)
+fr2_bt3 = Button(fr2, bd=0, image=fr2_img_4, command= lambda:[fr2.grid_remove(),fr4.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=158, y=32)
 # Botão de Sair
 fr2_bt4 = Button(fr2,bd=0,image=fr2_img_11, command= lambda:[fr2.grid_remove(),fr0.grid(),root.geometry("484x560+800+155")])
 fr2_bt4.place(width=115, height=42, x=1070, y=518)
@@ -906,7 +915,7 @@ fr4_lab1 = Label(fr4,bd=0, image=fr4_img_6).place(width=310, height=470, x=970, 
 fr4_lab2 = Label(fr4,bd=0, image=fr4_img_5).place(width=305, height=65, x=974, y=26)
 
 #tela do grafico
-fr4_lab3 = Label(fr4, image=fr4_img_10, width=1000).place(width=950, height=470, x=5, y=125) #
+fr4_lab3 = Label(fr4, image=fr4_img_10, width=1000).place(width=950, height=470, x=5, y=125) # 
 
 fr4_lab4 = Label(fr4,bd=0, image=fr4_img_11).place(width=178, height=52, x=30, y=148) # label moeda
 
@@ -915,7 +924,7 @@ fr4_lab5 = Label(fr4,bd=0, image=fr4_img_12).place(width=218, height=52, x=222, 
 fr4_lab6 = Label(fr4,bd=0, image=fr4_img_13).place(width=480, height=52, x=462, y=148) # label media
 
 fr4_lab7 = Label(fr4,text='', font=("Calibri", 15))
-fr4_lab7.place(width=145, height=24, x=993, y=454) #Montante
+fr4_lab7.place(width=145, height=24, x=993, y=370) #Montante
 
 fr4_lab8 = Label(fr4, text='',bd=0)
 fr4_lab8.place(width=200, height=40, x=230, y=225) #label do USD
@@ -951,22 +960,22 @@ fr4_lab17.place(width=465, height=40, x=470, y=535) #label do ETHEREUM Média
 # Criação de botões 
 
 # Botão de guardar
-fr4_bt1 = Button(fr4, bd=0, image=fr4_img_2, command= lambda:[fr4.grid_remove(),fr5.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=675, y=32)
+fr4_bt1 = Button(fr4, bd=0, image=fr4_img_2, command= lambda:[fr4.grid_remove(),fr5.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=525, y=32)
 # Botão de comprar
 #fr4_bt2 = Button(fr4, bd=0, image=fr4_img_3, command= lambda:[fr4.grid_remove(),fr3.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=54, y=32)
 # Botão de vender
-fr4_bt3 = Button(fr4, bd=0, image=fr4_img_4, command= lambda:[fr4.grid_remove(),fr4.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=367, y=32)
+fr4_bt3 = Button(fr4, bd=0, image=fr4_img_4, command= lambda:[fr4.grid_remove(),fr4.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=158, y=32)
 
 # Botão de limpar
 fr4_bt4 = Button(fr4, bd=0, image=fr4_img_8, command=lambda: [clear_2()] )
-fr4_bt4.place(width=115, height=43, x=1147, y=502)
+fr4_bt4.place(width=115, height=43, x=1002, y=432)
 #  botão de Confirmar
 fr4_bt5 = Button(fr4, bd=0, image=fr4_img_9, command=lambda: [escolha_vender()])
-fr4_bt5.place(width=115, height=42, x=1147, y=438)
+fr4_bt5.place(width=115, height=42, x=1141, y=432)
 
 # Botão de voltar
 fr4_bt6 = Button(fr4, bd=0, image=fr4_img_14, command=lambda: [fr4.grid_remove(),fr2.grid(),root.geometry("1289x600+310+153")])
-fr4_bt6.place(width=115, height=42, x=1002, y=503)
+fr4_bt6.place(width=115, height=42, x=1075, y=498)
 
 fr4_in1 = Entry(fr4, bd=2,textvariable=var2, font=("Calibri", 15))
 fr4_in1.place(width=140, height=24, x=993, y=222) #moeda a vender
@@ -1037,11 +1046,11 @@ fr5_lab17.place(width=465, height=40, x=470, y=535) #label do ETHEREUM Média
 # Criação de botões 
 
 # Botão de guardar
-fr5_bt1 = Button(fr5, bd=0, image=fr5_img_2, command= lambda:[fr5.grid_remove(),fr5.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=675, y=32)
+fr5_bt1 = Button(fr5, bd=0, image=fr5_img_2, command= lambda:[fr5.grid_remove(),fr5.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=525, y=32)
 # Botão de compra
 #fr5_bt2 = Button(fr5, bd=0, image=fr5_img_3,command= lambda:[fr5.grid_remove(),fr3.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=54, y=32)
 # Botão de venda
-fr5_bt3 = Button(fr5, bd=0, image=fr5_img_4,command= lambda:[fr5.grid_remove(),fr4.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=367, y=32)
+fr5_bt3 = Button(fr5, bd=0, image=fr5_img_4,command= lambda:[fr5.grid_remove(),fr4.grid(),root.geometry("1289x600+310+153")]).place(width=223, height=60, x=158, y=32)
 # Botão de limpar
 fr5_bt4 = Button(fr5, bd=0, image=fr5_img_8, command=lambda: [clear_3()])
 fr5_bt4.place(width=115, height=42, x=996, y=459)

@@ -27,4 +27,3 @@ drop table Usuarios;
 drop table Movimentacoes_p;
 
 show tables;
-

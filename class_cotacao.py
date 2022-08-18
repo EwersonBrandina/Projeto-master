@@ -18,7 +18,6 @@ class Cotacao:
         self.ml = ml
         self.mb = mb
         self.met = met
-
 #VALOR ESTÁTICO
     def dolar(self):
         requisicao = requests.get(f'https://economia.awesomeapi.com.br/all/USD-BRL')
@@ -45,7 +44,6 @@ class Cotacao:
         requisicao = requests.get(f'https://economia.awesomeapi.com.br/all/ETH-BRL')
         cotacao = requisicao.json()
         self.et=cotacao['ETH']['bid'] 
-
 #VALOR DOS ÚLTIMOS 3 MESES
     def dolar1(self):
         requisicao = requests.get(f'https://economia.awesomeapi.com.br/json/daily/USD-BRL/90')
@@ -81,7 +79,6 @@ class Cotacao:
         self.et3=0
         for i in cotacao:
             self.et3 = round((self.et3+float(i['bid']))/len(cotacao),3)
-
 #VALOR VARIÁVEL, ESCOLHA DO CLIENTE
     def dolar2(self, meses):
         self.md = (meses*self.d3)/3
