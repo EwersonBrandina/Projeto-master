@@ -30,9 +30,11 @@ primary key (cod_n)
 );
 
 select * from Usuarios;
+select * from Movimentacoes;
 select * from Movimentacoes_n;
 
 drop table Usuarios;
+drop table Movimentacoes;
 drop table Movimentacoes_n;
 
 show tables;
